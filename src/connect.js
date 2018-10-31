@@ -1,8 +1,13 @@
 import React from "react";
 import { Subscribe } from "unstated";
 
-export default _containers => Component => props => (
-  <Subscribe to={_containers}>
-    {(...containers) => <Component {...props} containers={containers} />}
+export default containers => mapper => Component => props => (
+  <Subscribe to={containers}>
+    {(...containers) => (
+      <Component
+        {...props}
+        {...mapper(containers)}
+      />
+    )}
   </Subscribe>
 );

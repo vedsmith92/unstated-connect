@@ -17,25 +17,21 @@ Useful when you need to access containers on lifecycle hooks
 import React, {Component} from "react";
 import connect from "unstated-connect";
 
-import jokes from "./containers/jokes";
+import Jokes from "./containers/Jokes";
 
 class App extends Component {
   async componentDidMount() {
-    const [jokes] = this.props.containers;
-
-    await [jokes.getJoke()];
+    await this.props.Jokes.getJoke();
   }
 
   render() {
-    const [jokes] = this.props.containers;
-
     return (
       <Container>
         <header className="center">
           <h1>Chuck norris jokes</h1>
         </header>
         <section>
-          {jokes.state.list.map((joke, key) => (
+          {this.props.jokes.list.map((joke, key) => (
             <div className="card" key={key}>
               {joke}
             </div>
@@ -49,7 +45,17 @@ class App extends Component {
   }
 }
 
-export default connect([jokes])(App);
+export default connect([Jokes])
+(([jokes]) => ({
+  Jokes: jokes,
+  jokes: jokes.state
+}))
+(App)
+```
+
+### connect
+```js
+@connect(SubscribesTo)(mapSubscribesToProps)
 ```
 
 ## License

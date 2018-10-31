@@ -8,7 +8,14 @@ import Jokes from "../helpers/Jokes"
 import JokesContainer from "../helpers/jokes-container"
 
 describe('connect', () => {
-  const ConnectedJokes = connect([JokesContainer])(Jokes)
+  const ConnectedJokes =
+    connect([JokesContainer])
+    (([jokes]) => ({
+      Jokes: jokes,
+      jokes: jokes.state
+    }))
+    (Jokes);
+
   const wrapper = mount(
     <Provider>
       <ConnectedJokes />
